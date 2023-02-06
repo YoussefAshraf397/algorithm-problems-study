@@ -5,7 +5,7 @@ import (
 	"sort"
 )
 
-//time: o(n^2) | space: o(1)
+// TwoNumberSum1 time: o(n^2) | space: o(1)
 func TwoNumberSum1(array []int, target int) []int {
 	for i := 0; i < len(array)-1; i++ {
 		firstNum := array[i]
@@ -19,7 +19,7 @@ func TwoNumberSum1(array []int, target int) []int {
 	return []int{}
 }
 
-//time: o(n^2) | space: o(n^2)
+// TwoNumberSum2 time: o(n^2) | space: o(n^2)
 func TwoNumberSum2(array []int, target int) []int {
 	nums := map[int]bool{}
 	for _, num := range array {
@@ -37,7 +37,7 @@ func TwoNumberSum2(array []int, target int) []int {
 	return []int{}
 }
 
-//time: o(n * log(n)) | space: o(1)
+// TwoNumberSum3 time: o(n * log(n)) | space: o(1)
 func TwoNumberSum3(array []int, target int) []int {
 	sort.Ints(array)
 	left, right := 0, len(array)-1
