@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type BinaryTreeD struct {
 	Value       int
@@ -17,7 +20,6 @@ type Level struct {
 func NodeDepths(root *BinaryTreeD) int {
 	sumOfDepths := 0
 	stack := []Level{{Root: root, Depth: 0}}
-	fmt.Println(stack)
 	var top Level
 	for len(stack) > 0 {
 		top, stack = stack[len(stack)-1], stack[:len(stack)-1]
@@ -32,15 +34,34 @@ func NodeDepths(root *BinaryTreeD) int {
 	return sumOfDepths
 }
 
-func NodeDepthByRecurssion(root *BinaryTree) int {
+func nodeDepthByRecurssion(root *BinaryTreeD) int {
 	return nodeDepthsHelper(root, 0)
 }
 
-func nodeDepthsHelper(root *BinaryTree, depth int) int {
+func nodeDepthsHelper(root *BinaryTreeD, depth int) int {
 	if root == nil {
 		return 0
 	}
 	return depth + nodeDepthsHelper(root.Left, depth+1) + nodeDepthsHelper(root.Right, depth+1)
+}
+
+func sumLastLevel(root *BinaryTreeD, maxLevel int) int {
+	if root == nil {
+		return 0
+	}
+	if maxLevel == 1 {
+		return root.Value
+	}
+
+	return sumLastLevel(root.Left, maxLevel-1) +
+		sumLastLevel(root.Right, maxLevel-1)
+}
+
+func maxDepth(root *BinaryTreeD) int {
+	if root == nil {
+		return 0
+	}
+	return int(1 + math.Max(float64(maxDepth(root.Left)), float64(maxDepth(root.Right))))
 }
 
 func main() {
@@ -48,9 +69,11 @@ func main() {
 	left2 := BinaryTreeD{5, &left, nil}
 
 	right := BinaryTreeD{10, nil, nil}
-	right2 := BinaryTreeD{10, nil, &right}
+	right2 := BinaryTreeD{25, nil, &right}
 
 	root := BinaryTreeD{5, &left2, &right2}
 
-	fmt.Println(NodeDepths(&root))
+	fmt.Println("max depth: ", maxDepth(&root))
+	fmt.Println("sum last level: ", sumLastLevel(&root, 3))
+	//fmt.Println(NodeDepths(&root))
 }
